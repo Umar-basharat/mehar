@@ -28,7 +28,15 @@ jobs:
           node-version: 12
 
       # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+      - name: Build Yarn and npm 
+        uses: linchpin/action-build-yarn-npm@master
+        with: 
+          cmd: install
+      - name: build 
+        run: npm run build  
+      - name: build surge 
+        run: npm install -g surge  
+      - name: dploy 
+        run: surge ./ build http://misty.surge.sh --token ${{ secrets.SURGE_TOKEN }}  
+            
+        
